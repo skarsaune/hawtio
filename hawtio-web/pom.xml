@@ -43,7 +43,7 @@
   <dependencies>
     <dependency>
       <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
+      <artifactId>${servlet-api-artifact}</artifactId>
       <version>${servlet-api-version}</version>
       <scope>provided</scope>
     </dependency>
@@ -156,7 +156,7 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.eclipse.jetty.aggregate</groupId>
+      <groupId>org.eclipse.jetty</groupId>
       <artifactId>${jetty-webapp-artifactId}</artifactId>
       <version>${jetty-version}</version>
       <scope>test</scope>
@@ -188,6 +188,12 @@
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-util</artifactId>
+      <version>${jetty-version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-server</artifactId>
       <version>${jetty-version}</version>
       <scope>test</scope>
     </dependency>
@@ -343,8 +349,16 @@
     <dependency>
       <groupId>net.alchim31</groupId>
       <artifactId>livereload-jvm</artifactId>
-      <version>0.2.0</version>
+      <version>0.3.0-SNAPSHOT</version>
       <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.sonatype.aether</groupId>
+      <artifactId>aether-api</artifactId>
+      <version>1.11</version>
+      <scope>test</scope>
+
     </dependency>
 
   </dependencies>
@@ -749,13 +763,12 @@
           <webAppConfig>
             <contextPath>${context}</contextPath>
             <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
-              <resourcesAsCSV>${warSourceDirectory},${webappDirectory}</resourcesAsCSV>
+              <resourcesAsCSV>${warSourceDirectory},${webappDirectory},src/test/resources</resourcesAsCSV>
             </baseResource>
           </webAppConfig>
           <scanIntervalSeconds>0</scanIntervalSeconds>
           <stopKey>foo</stopKey>
           <stopPort>9999</stopPort>
-          <useTestScope>true</useTestScope>
           <connectors>
             <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
               <port>${jettyPort}</port>
@@ -838,7 +851,7 @@
       <plugin>
         <groupId>org.jboss.as.plugins</groupId>
         <artifactId>jboss-as-maven-plugin</artifactId>
-        <version>7.3.Final</version>
+        <version>7.9.Final</version>
       </plugin>
 
       <plugin>

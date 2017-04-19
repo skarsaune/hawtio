@@ -13,7 +13,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.eclipse.jetty.aggregate</groupId>
+      <groupId>org.eclipse.jetty</groupId>
       <artifactId>${jetty-webapp-artifactId}</artifactId>
       <version>${jetty-version}</version>
     </dependency>

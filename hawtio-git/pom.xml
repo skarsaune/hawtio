@@ -43,7 +43,7 @@
     <dependencies>
         <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
+            <artifactId>${servlet-api-artifact}</artifactId>
             <version>${servlet-api-version}</version>
             <scope>provided</scope>
         </dependency>
