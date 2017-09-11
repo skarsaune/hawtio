@@ -80,7 +80,7 @@ module Diagnostics {
         function render( response ) {
 
 
-            var statusString = response.value;
+            var statusString = response.response;
             $scope.jfrEnabled = statusString.indexOf( "not enabled" ) == -1;
             $scope.isRunning = statusString.indexOf( "(running)" ) > -1;
             $scope.isRecording = $scope.isRunning || statusString.indexOf("(stopped)") > -1;
@@ -136,14 +136,12 @@ module Diagnostics {
                 + operation + " with arguments" + arguments + " settings: " + JSON.stringify( $scope.jfrSettings ) );
             $scope.jcmd='jcmd ' + $scope.pid + ' ' + jcmd + ' ' + showArguments(arguments);
             jolokia.request( [{
-                type: "exec",
-                operation: operation,
-                mbean: 'com.sun.management:type=DiagnosticCommand', 
+                exec: operation,
+                name: 'com.sun.management:type=DiagnosticCommand', 
                 arguments: arguments
             }, {
-                type: 'exec',
-                operation: 'jfrCheck([Ljava.lang.String;)',
-                mbean: 'com.sun.management:type=DiagnosticCommand',
+                exec: 'jfrCheck([Ljava.lang.String;)',
+                name: 'com.sun.management:type=DiagnosticCommand',
                 arguments: ['']
             }], onSuccess( function( response ) {
 
@@ -153,7 +151,7 @@ module Diagnostics {
                     render( response );
                 } else {
                     if ( callback ) {
-                        callback( response.value );
+                        callback( response.response );
                     }
                     Core.$apply( $scope );
                 }
@@ -264,9 +262,8 @@ module Diagnostics {
         }
 
         Core.register( jolokia, $scope, [{
-            type: 'exec',
-            operation: 'jfrCheck([Ljava.lang.String;)',
-            mbean: 'com.sun.management:type=DiagnosticCommand',
+            exec: 'jfrCheck([Ljava.lang.String;)',
+            name: 'com.sun.management:type=DiagnosticCommand',
             arguments: ['']
         }], onSuccess( render ) );
 
